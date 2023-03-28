@@ -1,0 +1,20 @@
+def remove_extra_parentheses(sql):
+    # 递归基：如果没有括号，返回原始 SQL 语句
+    if '(' not in sql:
+        return sql
+
+    # 查找最内层的一组括号
+    start = sql.rfind('(')
+    end = start + sql[start:].index(')')
+
+    # 如果括号内没有其他括号，则递归处理括号外的部分
+    if '(' not in sql[start+1:end]:
+        new_sql = sql[:start] + remove_extra_parentheses(sql[start+1:end]) + sql[end+1:]
+    else:
+        # 如果括号内还有其他括号，则先递归处理内部括号，再递归处理外部括号
+        inner_sql = sql[start+1:end]
+        new_inner_sql = remove_extra_parentheses(inner_sql)
+        new_sql = sql[:start] + new_inner_sql + sql[end+1:]
+        new_sql = remove_extra_parentheses(new_sql)
+
+    return new_sql
