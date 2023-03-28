@@ -1,21 +1,63 @@
-def remove_extra_parentheses(sql):
-    # 如果 SQL 中没有括号，则直接返回 SQL
-    if '(' not in sql and ')' not in sql:
-        return sql
-    
-    # 找到 SQL 中最里层的一对括号，同时保证这对括号内没有其他括号
-    start = sql.rfind('(')
-    end = sql.find(')', start)
-    if sql[start+1:end].count('(') == sql[start+1:end].count(')') == 0:
-        # 如果这对括号中只有一个条件，则可以直接删除这对括号
-        if start == 0 and end == len(sql) - 1:
-            return remove_extra_parentheses(sql[1:-1])
-        elif start == 0:
-            return remove_extra_parentheses(sql[start:end+1]) + remove_extra_parentheses(sql[end+1:])
-        elif end == len(sql) - 1:
-            return remove_extra_parentheses(sql[:start]) + remove_extra_parentheses(sql[start:end+1])
-        else:
-            return remove_extra_parentheses(sql[:start]) + remove_extra_parentheses(sql[start:end+1]) + remove_extra_parentheses(sql[end+1:])
-    else:
-        # 如果这对括号中还有其他括号，则继续递归
-        return remove_extra_parentheses(sql[:start]) + remove_extra_parentheses(sql[start:end+1]) + remove_extra_parentheses(sql[end+1:])
+def simplify(expression):
+    # 去除空格
+    # expression = expression.replace(' ', '')
+
+    # 递归结束条件，表达式中没有括号
+    if '(' not in expression:
+        return expression
+
+    # 找到最内层括号中的内容
+    innermost = ''
+    depth = 0
+    for i in range(len(expression)):
+        if expression[i] == '(':
+            depth += 1
+        elif expression[i] == ')':
+            depth -= 1
+            if depth == 0:
+                innermost = expression[expression.index('(') + 1:i]
+                break
+
+    # 简化最内层括号中的内容
+    simplified_innermost = simplify(innermost)
+
+    # 将简化后的内容替换回原表达式
+    expression = expression.replace('(' + innermost + ')', simplified_innermost)
+
+    # 处理 or 运算符
+    parts = expression.split('or')
+    if len(parts) > 1:
+        result_parts = []
+        for part in parts:
+            result_part = simplify(part)
+            result_parts.append(result_part)
+        return ' or '.join(result_parts)
+
+    # 处理 and 运算符
+    parts = expression.split('and')
+    if len(parts) > 1:
+        result_parts = []
+        for part in parts:
+            result_part = simplify(part)
+            result_parts.append(result_part)
+        return ' and '.join(result_parts)
+
+    # 递归结束条件，表达式中没有括号且没有 or 或 and 运算符
+    return expression
+
+
+query1 = "(col1=val1) or (col2=val2 and col3=val3)"
+query2 = "(col1=val1) and (col2=val2 or col3=val3) and (col4=val4)"
+query3 = "(col1=val1 and col1=val2) and (col3=val3 or col3=val4)"
+query4 = "(col1=val1 or col2=val2) and (col3=val3 or col4=val4)"
+
+print(simplify(query1)) # 输出：col1=val1 or col2=val2 and col3=val3
+print(simplify(query2))
+print(simplify(query3))
+print(simplify(query4))
+
+query5 = "(col1=val1 and col4=val4) or (col2=val2 and col3=val3)"
+print(simplify(query5))
+
+query6 = "(col1=val1 and col5=val5) and (col3=val3 or col4=val4 or col6=val6)"
+print(simplify(query6))
