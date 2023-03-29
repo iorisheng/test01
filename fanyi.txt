@@ -6,4 +6,14 @@ The following example elucidates the correlation between user-input query condit
 
 The "full-text" field stores the ID, account numbers, business tags, and user-defined tags of the current row's data in text format and undergoes tokenization for inverted index querying.
 
+Today my main task was to transform the syntax relationships based on user needs, new data structure, and query syntax validation into documentable forms, and showcase them through examples. The document is in progress.
+The work plan for next is to finish the document and continue with the implementation of data cleaning, processing, and query syntax transformation.
+
+
+
+
+
+
+
+
 
