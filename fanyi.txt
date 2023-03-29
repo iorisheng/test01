@@ -2,7 +2,7 @@ Based on the requirements of WuKong3.0, we perform data cleansing and processing
 
 Below is an example that illustrates the relationship between user input query conditions and their corresponding transformed SQL syntax:
 
-
+The following example elucidates the correlation between user-input query conditions and the resultant transformed SQL syntax.
 
 
 
