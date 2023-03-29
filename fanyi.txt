@@ -4,6 +4,6 @@ Below is an example that illustrates the relationship between user input query c
 
 The following example elucidates the correlation between user-input query conditions and the resultant transformed SQL syntax.
 
-
+The "full-text" field stores the ID, account numbers, business tags, and user-defined tags of the current row's data in text format and undergoes tokenization for inverted index querying.
 
 
