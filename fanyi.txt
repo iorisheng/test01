@@ -1,1 +1,9 @@
 Based on the requirements of WuKong3.0, we perform data cleansing and processing on data retrieved from multiple APIs, reassembling it into a new JSON data structure that is provided to users for search services. Within this assembled structure, each key-value pair is associated with an alias that references the actual path of the data. The relationships between these aliases and paths are stored in a data table. When a user inputs a query condition on the webpage, the program utilizes the alias to retrieve the corresponding data storage path, and generates a runnable SQL query statement to facilitate data retrieval.
+
+
+
+
+
+
+
+
