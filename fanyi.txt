@@ -1,4 +1,32 @@
-Based on 
+def check_parentheses(input_str):
+    count = 0
+    for char in input_str:
+        if char == '(':
+            count += 1
+        elif char == ')':
+            count -= 1
+        if count < 0:
+            return False
+    return count == 0
+
+def check_nested_parentheses(input_str):
+    nested_parentheses = False
+    depth = 0
+    for char in input_str:
+        if char == '(':
+            depth += 1
+            if depth > 1:
+                nested_parentheses = True
+        elif char == ')':
+            depth -= 1
+    return nested_parentheses
+
+if __name__ == '__main__':
+    print("------------------ Satrt ----------------")
+    stra = "((m) a(c) (b) )"
+    print(check_parentheses(stra))
+    print(check_nested_parentheses(stra))
+    print("------------------ End ----------------")
 
 
 
